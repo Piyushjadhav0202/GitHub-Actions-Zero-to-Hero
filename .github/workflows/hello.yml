@@ -1,0 +1,45 @@
+name: Day 1 - Hello World
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:      # allows manual trigger too
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print Hello World
+        run: echo "Hello, World! My first GitHub Action is running!"
+
+      - name: Print workflow info
+        run: |
+          echo "================================"
+          echo "Repo:    ${{ github.repository }}"
+          echo "Branch:  ${{ github.ref_name }}"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "By:      ${{ github.actor }}"
+          echo "Commit:  ${{ github.sha }}"
+          echo "================================"
+
+      - name: List files in the repo
+        run: ls -la
+
+      - name: Check what OS the runner is
+        run: |
+          echo "Runner OS: ${{ runner.os }}"
+          uname -a
+
+      - name: Run a multi-line script
+        run: |
+          echo "Step 1: Creating a test file"
+          echo "Hello from GitHub Actions!" > test.txt
+          echo "Step 2: Reading the file"
+          cat test.txt
+          echo "Step 3: Done!"
